@@ -24,7 +24,6 @@ namespace Assignment4_P1New
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseNpgsql("host=localhost;database=northwind;user id=postgres;password = fnb78n87j;");
             }
         }
@@ -114,13 +113,13 @@ namespace Assignment4_P1New
 
                 entity.Property(e => e.Freight).HasColumnName("freight");
 
-                entity.Property(e => e.Date)
+                entity.Property(e => e.orderdate)
                     .HasColumnName("orderdate")
-                    .HasColumnType("date");
+                    .HasColumnType("orderdate");
 
                 entity.Property(e => e.Required)
                     .HasColumnName("requireddate")
-                    .HasColumnType("date");
+                    .HasColumnType("orderdate");
 
                 entity.Property(e => e.Shipaddress)
                     .HasColumnName("shipaddress")
@@ -140,7 +139,7 @@ namespace Assignment4_P1New
 
                 entity.Property(e => e.Shippeddate)
                     .HasColumnName("shippeddate")
-                    .HasColumnType("date");
+                    .HasColumnType("orderdate");
 
                 entity.Property(e => e.Shippostalcode)
                     .HasColumnName("shippostalcode")

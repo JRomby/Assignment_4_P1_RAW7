@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Assignment4_P1New
 {
-    public partial class Order
+    public class Order
     {
         public Order()
         {
@@ -13,7 +13,7 @@ namespace Assignment4_P1New
         public int Id { get; set; }
         public string Customerid { get; set; }
         public int? Employeeid { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime? orderdate { get; set; }
         public DateTime? Required { get; set; }
         public DateTime? Shippeddate { get; set; }
         public int? Freight { get; set; }
