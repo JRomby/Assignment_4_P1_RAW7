@@ -19,12 +19,11 @@ namespace DataService
 
         public Categories CreateCategory(string name, string description)
         {
-            Categories category = new Categories();
-            category.Categoryname = name;
-            category.Description = description;
-            category.Categoryid = context.Categories.Count()+1;
-            context.Categories.Add(category);
-            context.SaveChanges();
+            Categories category = new Categories
+            {
+                Categoryname = name, Description = description, Categoryid = context.Categories.Count() + 1
+            };
+            AddCategory(category);
             return category;
         }
 
@@ -33,14 +32,13 @@ namespace DataService
             var category = context.Categories.Find(id);
             if (category == null)
                 return false;
-            context.Categories.Remove(category);
-            context.SaveChanges();
+            RemoveCategory(category);
             return true;
         }
 
         public bool UpdateCategory(int id, string newName, string newDescription)
         {
-            Categories category = context.Categories.Find(id);
+            var category = context.Categories.Find(id);
             if (category == null)
                 return false;
             category.Categoryname = newName;
@@ -84,5 +82,16 @@ namespace DataService
             return context.Orderdetails.Where(x => x.Productid == id).ToList();
         }
 
+        public void AddCategory(Categories category)
+        {
+            context.Categories.Add(category);
+            context.SaveChanges();
+        }
+
+        public void RemoveCategory(Categories category)
+        {
+            context.Categories.Remove(category);
+            context.SaveChanges();
+        }
     }
 }
