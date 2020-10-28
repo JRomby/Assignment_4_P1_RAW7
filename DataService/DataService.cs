@@ -1,96 +1,103 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataService
 {
     public class DataService
     {
         northwind2Context context = new northwind2Context();
-        public List<Categories> GetCategories()
+         public async Task<List<Categories>>  GetCategories()
         {
-            return context.Categories.ToList();
+            return await context.Categories.ToListAsync();
         }
 
-        public Categories GetCategory(int categoryId)
+        public async Task<Categories> GetCategory(int categoryId)
         {
-            return context.Categories.Find(categoryId);
+            return await context.Categories.FindAsync(categoryId);
         }
 
-        public Categories CreateCategory(string name, string description)
+        public async Task<Categories> CreateCategory(string name, string description)
         {
             Categories category = new Categories
             {
                 Categoryname = name, Description = description, Categoryid = context.Categories.Count() + 1
             };
-            AddCategory(category);
+            await AddCategory(category);
             return category;
         }
 
-        public bool DeleteCategory(int id)
+        public async Task<bool> DeleteCategory(int id)
         {
-            var category = context.Categories.Find(id);
-            if (category == null)
+            var category = context.Categories.FindAsync(id);
+            if (await category == null)
                 return false;
-            RemoveCategory(category);
+            RemoveCategory(await category);
             return true;
         }
 
-        public bool UpdateCategory(int id, string newName, string newDescription)
+        public async Task<bool> UpdateCategory(int id, string newName, string newDescription)
         {
-            var category = context.Categories.Find(id);
-            if (category == null)
+            var category = context.Categories.FindAsync(id);
+            if (await category == null)
                 return false;
-            category.Categoryname = newName;
-            category.Description = newDescription;
-            context.SaveChanges();
+            ChangeCategory(await category, newName, newDescription);
             return true;
         }
 
-        public Products GetProduct(int id)
+        public async Task<Products> GetProduct(int id)
         {
-            return context.Products.Find(id);
+            return await context.Products.FindAsync(id);
         }
 
-        public List<Products> GetProductByCategory(int id)
+        public async Task<List<Products>> GetProductByCategory(int id)
         {
-            return context.Products.Where(x => x.Categoryid == id).ToList();
+            return await context.Products.Where(x => x.Categoryid == id).ToListAsync();
         }
 
-        public List<Products> GetProductByName(string subName)
+        public async Task<List<Products>> GetProductByName(string subName)
         {
-            return context.Products.Where(x => x.Productname.Contains(subName)).ToList();
+            return await context.Products.Where(x => x.Productname.Contains(subName)).ToListAsync();
         }
 
-        public Orders GetOrder(int id)
+        public async Task<Orders> GetOrder(int id)
         {
-            return context.Orders.Find(id);
+            return await context.Orders.FindAsync(id);
         }
 
-        public List<Orders> GetOrders()
+        public async Task<List<Orders>> GetOrders()
         {
-            return context.Orders.ToList();
+            return await context.Orders.ToListAsync();
         }
 
-        public List<Orderdetails> GetOrderDetailsByOrderId(int id)
+        public async Task<List<Orderdetails>> GetOrderDetailsByOrderId(int id)
         {
-            return context.Orderdetails.Where(x => x.Orderid == id).ToList();
+            return await context.Orderdetails.Where(x => x.Orderid == id).ToListAsync();
         }
 
-        public List<Orderdetails> GetOrderDetailsByProductId(int id)
+        public async Task<List<Orderdetails>> GetOrderDetailsByProductId(int id)
         {
-            return context.Orderdetails.Where(x => x.Productid == id).ToList();
+            return await context.Orderdetails.Where(x => x.Productid == id).ToListAsync();
         }
 
-        public void AddCategory(Categories category)
+        public async Task AddCategory(Categories category)
         {
-            context.Categories.Add(category);
-            context.SaveChanges();
+            await context.Categories.AddAsync(category);
+            await context.SaveChangesAsync();
         }
 
-        public void RemoveCategory(Categories category)
+        public async void RemoveCategory(Categories category)
         {
             context.Categories.Remove(category);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+        }
+
+        public async void ChangeCategory(Categories category, string name, string description)
+        {
+            category.Categoryname = name;
+            category.Description = description;
+            await context.SaveChangesAsync();
         }
     }
 }
