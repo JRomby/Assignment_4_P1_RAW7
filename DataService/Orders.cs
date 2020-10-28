@@ -9,12 +9,6 @@ namespace DataService
             Orderdetails = new HashSet<Orderdetails>();
         }
 
-        private Orders(Action<object, string> lazyLoader)
-        {
-            LazyLoader = lazyLoader;
-        }
-        private Action<object, string> LazyLoader { get; set; }
-
         public int Orderid { get; set; }
         public string Customerid { get; set; }
         public int? Employeeid { get; set; }
@@ -31,7 +25,6 @@ namespace DataService
         public virtual Customers Customer { get; set; }
         public virtual Employees Employee { get; set; }
 
-        private ICollection<Orderdetails> _Orderdetails;
-        public virtual ICollection<Orderdetails> Orderdetails { get => LazyLoader.Load(this, ref _Orderdetails); set => _Orderdetails = value; }
+        public virtual ICollection<Orderdetails> Orderdetails { get; set; }
     }
 }
