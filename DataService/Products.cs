@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DataService
 {
@@ -26,8 +25,7 @@ namespace DataService
         public int? Unitsinstock { get; set; }
 
         private Categories _category;
-        public virtual Categories Category { get => LazyLoader.Load(this, ref _category
-        ); set => _category = value; }
+        public virtual Categories Category { get => LazyLoader.Load(this, ref _category); set => _category = value; }
         public virtual Suppliers Supplier { get; set; }
         public virtual ICollection<Orderdetails> Orderdetails { get; set; }
     }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataService
 {
@@ -26,11 +23,6 @@ namespace DataService
 
         private ICollection<Products> _products;
 
-        public virtual ICollection<Products> Products { 
-            get => LazyLoader.Load(this.Categoryname, ref _products);
-            set => _products = value;
-        }
-
-
+        public virtual ICollection<Products> Products { get => LazyLoader.Load(this.Categoryname, ref _products); set => _products = value; }
     }
 }
